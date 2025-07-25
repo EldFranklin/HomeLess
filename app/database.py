@@ -5,10 +5,8 @@ import os
 
 load_dotenv()
 
-
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Criando o engine de conexão com o PostgreSQL
 engine = create_engine(DATABASE_URL)
 
 #sessão e base para os modelos
