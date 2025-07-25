@@ -1,6 +1,7 @@
 """
 Sistema de Gestão para Abrigos
-Script principal para inicialização e teste do sistema
+Script principal para inicialização e teste do sistema 
+
 """
 
 from sqlalchemy.orm import Session
@@ -10,17 +11,17 @@ from app.models import TipoAbrigo, TurnoEnum
 
 
 def main():
-    """Inicializa o sistema e cria dados básicos para teste"""
+    """Inicializa o sistema e cria dados básicos para teste, pode não estar funcionando após as últimas alterações."""
     
     # Conectar ao banco de dados
     db: Session = database.SessionLocal()
     
     try:
-        # Criar tabelas no banco de dados
+       
         models.Base.metadata.create_all(bind=database.engine)
         print("Tabelas do banco de dados criadas/verificadas com sucesso.")
         
-        # Criar abrigo padrão
+    
         print("Verificando abrigo padrão...")
         if not crud.buscar_abrigo_por_nome(db, "Abrigo Central"):
             crud.criar_abrigo(db, schemas.AbrigoCreate(
@@ -40,7 +41,7 @@ def main():
         else:
             print("Abrigo Central já existe no sistema.")
 
-        # Criar funcionário coordenador
+       
         print("Verificando funcionário coordenador...")
         if not crud.buscar_funcionario_por_matricula(db, "FUNC001"):
             crud.criar_funcionario(db, schemas.FuncionarioCreate(
@@ -63,7 +64,7 @@ def main():
         else:
             print("Funcionário FUNC001 já existe no sistema.")
 
-        # Criar profissional de saúde
+        
         print("Verificando profissional de saúde...")
         if not crud.buscar_profissional_por_registro(db, "CRP001"):
             crud.criar_profissional_saude(db, schemas.ProfissionalSaudeCreate(
@@ -83,7 +84,7 @@ def main():
         else:
             print("Profissional CRP001 já existe no sistema.")
 
-        # Criar pessoa para acolhimento
+       
         print("Verificando pessoa para acolhimento...")
         if not crud.buscar_pessoa_por_cpf(db, "11122233344"):
             crud.criar_pessoa_acolhida(db, schemas.PessoaAcolhidaCreate(
@@ -129,7 +130,7 @@ def main():
         else:
             print("Pessoa já possui admissão ativa no sistema.")
 
-        # Exibir relatório do sistema
+        
         print("\n" + "="*50)
         print("RELATÓRIO DO SISTEMA")
         print("="*50)
@@ -148,7 +149,7 @@ def main():
                 print(f"Status: {status}")
                 print("-" * 30)
 
-        # Estatísticas finais
+     
         print("\nESTATÍSTICAS DO SISTEMA:")
         print(f"Total de Funcionários: {len(crud.listar_funcionarios(db))}")
         print(f"Total de Abrigos: {len(crud.listar_abrigos(db))}")
@@ -161,7 +162,7 @@ def main():
         print(f"Erro durante a execução: {str(e)}")
         db.rollback()
         
-        # Log detalhado do erro em ambiente de desenvolvimento
+    
         import traceback
         print("\nDetalhes do erro:")
         traceback.print_exc()
